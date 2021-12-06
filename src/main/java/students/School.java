@@ -1,10 +1,14 @@
 package students;
 
+import java.io.Serializable;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
+@FunctionalInterface
 interface StudentCriterion {
   boolean test(Student s);
+//  void doStuff();
 }
 
 class SmartCriterion implements StudentCriterion {
@@ -139,5 +143,15 @@ public class School {
         school, s -> s.getCourses().size() > 2));
 
 //    myList.sort(/* lambda */)
+
+//    StudentCriterion obj;
+//    obj = s -> s.getCourses().size() > 2;
+    Object obj = (StudentCriterion & Serializable) s -> s.getCourses().size() > 2;
+
+    Class<?> cl = obj.getClass();
+    Method[] methods = cl.getMethods();
+    for (Method m : methods) {
+      System.out.println(">> " + m);
+    }
   }
 }

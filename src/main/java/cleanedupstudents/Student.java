@@ -1,4 +1,4 @@
-package students;
+package cleanedupstudents;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -63,7 +63,7 @@ public final class Student {
     return Collections.unmodifiableList(courses);
   }
 
-  private static StudentCriterion getSmartCriterion() {
+  private static Criterion<Student> getSmartCriterion() {
     return s -> s.getGpa() > 3.4;
   }
 
