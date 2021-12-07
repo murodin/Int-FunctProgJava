@@ -29,7 +29,7 @@ public class School {
 //  }
 
   public static <E> List<E> selectByCriterion(
-      List<E> ls, Criterion<E> crit) {
+      Iterable<E> ls, Criterion<E> crit) {
     List<E> res = new ArrayList<>();
     for (E s : ls) {
       if (crit.test(s)) {
