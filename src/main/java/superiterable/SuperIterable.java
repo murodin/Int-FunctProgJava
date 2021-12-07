@@ -17,7 +17,7 @@ public class SuperIterable<E> implements Iterable<E> {
   public <F> SuperIterable<F> map(
       SuperIterable<E> this, Function<E, F> op) {
     List<F> res = new ArrayList<>();
-    for (E e : this) {
+    for (E e : this.self) {
       F f = op.apply(e);
       res.add(f);
     }
@@ -37,6 +37,18 @@ public class SuperIterable<E> implements Iterable<E> {
     for (E e : this.self) {
       if (criterion.test(e)) {
         res.add(e);
+      }
+    }
+    return new SuperIterable<>(res);
+  }
+
+  public <F> SuperIterable<F> flatMap(
+      SuperIterable<E> this, Function<E, SuperIterable<F>> op) {
+    List<F> res = new ArrayList<>();
+    for (E e : this.self) {
+      SuperIterable<F> manyF = op.apply(e);
+      for (F f : manyF) {
+        res.add(f);
       }
     }
     return new SuperIterable<>(res);
