@@ -51,5 +51,7 @@ public class School {
 
     List<String> ls = List.of("Fred", "Jim", "Sheila");
     showAll(selectByCriterion(ls, (String s) -> s.length() > 3));
+
+
   }
 }

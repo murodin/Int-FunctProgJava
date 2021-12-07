@@ -3,6 +3,7 @@ package cleanedupstudents;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Predicate;
 
 // classes really need to be final to be able to enforce
 // long-term immutability
@@ -63,8 +64,27 @@ public final class Student {
     return Collections.unmodifiableList(courses);
   }
 
-  private static Criterion<Student> getSmartCriterion() {
-    return s -> s.getGpa() > 3.4;
+  public static Predicate<Student> getFlexibleSmartPredicate(double [] t) {
+    return s -> s.gpa > t[0];
+  }
+
+  public static Predicate<Student> getNameStartsWithPredicate(String prefix) {
+    return s -> s.getName().startsWith(prefix);
+  }
+
+  public static Predicate<Student> getEnthusiasticPredicate(int threshold) {
+    return s -> s.getCourses().size() > threshold;
+  }
+
+  public static Predicate<Student> getSmartPredicate(
+      /*final */double threshold) {
+//    threshold++;
+    double copy = threshold;
+    copy++;
+
+    // "capturing" the short-lived value from the enclosing method scope
+    // into the long-lived object scope is called a "closure"
+    return s -> s.gpa > /*++*/threshold;
   }
 
   @Override
