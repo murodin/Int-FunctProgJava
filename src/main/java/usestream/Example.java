@@ -3,6 +3,7 @@ package usestream;
 import cleanedupstudents.Student;
 
 import java.util.List;
+import java.util.function.Function;
 import java.util.stream.Stream;
 
 public class Example {
@@ -25,6 +26,53 @@ public class Example {
     Stream.iterate(1, x -> x + 1)
         .limit(10)
         .map(x -> "The number is " + x)
+        .forEach(System.out::println);
+
+    // warning to non-smart
+    ls.stream()
+        .filter(s -> s.getGpa() < 3)
+        .map(s -> "Dear " + s.getName() + " your grade of " + s.getGpa()
+            + " is terrible, buck your ideas up!")
+        .forEach(System.out::println);
+    // all courses for enthusiastic students
+    System.out.println("----courses for enthusiastic students");
+    ls.stream()
+        .filter(s -> s.getCourses().size() > 2)
+        .flatMap(s -> s.getCourses().stream())
+        .forEach(System.out::println);
+
+    // all courses from smart students without duplicates
+    System.out.println("----- course for smart students, no dups");
+    ls.stream()
+        .filter(s -> s.getGpa() > 3)
+        .flatMap(s -> s.getCourses().stream())
+        .distinct()
+        .forEach(System.out::println);
+
+//    // ditto, in alpha order
+    System.out.println("----- course for smart students, no dups, sorted");
+    ls.stream()
+        .filter(s -> s.getGpa() > 3)
+        .flatMap(s -> s.getCourses().stream())
+        .distinct()
+        .sorted() // MEMORY!!!
+        .forEach(System.out::println);
+
+//    // name-course pairs...
+    Function<Student, Stream<String>> studentToNameCoursePairs =
+        s -> s.getCourses().stream()
+          .map(c -> "Student " + s.getName() + " takes course " + c);
+
+    ls.stream()
+//        .flatMap((Student s) -> {
+//          return s.getCourses().stream().map(c -> "Student " + s.getName()
+//                  + " takes course " + c);
+//        })
+
+//        .flatMap(s -> s.getCourses().stream()
+//            .map(c -> "Student " + s.getName() + " takes course " + c))
+
+        .flatMap(studentToNameCoursePairs)
         .forEach(System.out::println);
   }
 }
