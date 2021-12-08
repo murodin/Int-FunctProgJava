@@ -1,0 +1,29 @@
+Monte Carlo.
+============
+
+If a single dice is thrown, there's an equal probability of each of the
+"face" values 1 through 6. However, if ten dice are thrown together, the
+sum of the face values of each throw will be a number between 10 and 60,
+and will describe a normal distribution (so the value 35 will show up
+far more often than the values 10 or 60).
+
+Write a program that uses only Streams (in particular, it should use no
+loops, and no "subString" operations that calculates the distribution for
+a large number of throws (10,000 or more) and displays the frequency
+distribution using ASCII graphics. So, the output should look similar to
+this, but with longer lines, and numbers from 10 to 60:
+
+10:
+11: *
+12: **
+13: ****
+14: ******
+15: ****
+16: **
+17: *
+18:
+
+You might like to use the Stream.generate methods, perhaps either
+Math.random() or ThreadLocalRandom.current.ints() in support of this
+Your code should also avoid defining any string containing more than
+one asterisk (just to make it more challenging!)
