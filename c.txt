@@ -1,0 +1,3 @@
+This if file c.txt
+this has fascinating contents
+and three whole lines!
